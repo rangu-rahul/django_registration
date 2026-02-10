@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+  </head>
+
+  <body>
+    <h1>Registration form</h1>
+    <form method="POST">
+      {% csrf_token %}
+      <label>name</label>
+      {{ form.name}}
+      <br />
+      <label>email</label>
+      {{ form.email}}
+      <br />
+      <label>password</label>
+      {{ form.password}}
+      <br />
+      <label>confirm password</label>
+      {{ form.cpassword}}
+      <br />
+      <button type="submit">Register</button>
+      <hr />
+      <h2>registered users</h2>
+      <table border="1">
+        {% for i in users %}
+        <tr>
+          <td>{{i.name}}</td>
+          <td>{{i.email}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </form>
+  </body>
+</html>
