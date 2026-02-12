@@ -4,35 +4,387 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Sans+3:wght@400;600&display=swap");
+
+      :root {
+        --ink: #1e2a2f;
+        --muted: #5e6b72;
+        --accent: #0e7a7f;
+        --accent-2: #f08a5d;
+        --surface: #ffffff;
+        --shadow: 0 18px 45px rgba(18, 32, 38, 0.15);
+        --radius: 18px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Source Sans 3", "Segoe UI", sans-serif;
+        color: var(--ink);
+        background: radial-gradient(
+          circle at 20% 20%,
+          #e8f7f4,
+          #fdf6ef 45%,
+          #f8efe4 100%
+        );
+        min-height: 100vh;
+        padding: 32px 20px 48px;
+      }
+
+      h1,
+      h2,
+      .brand {
+        font-family: "Space Grotesk", "Segoe UI", sans-serif;
+        margin: 0 0 12px;
+      }
+
+      .page {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 28px;
+        max-width: 1100px;
+        margin: 0 auto 32px;
+      }
+
+      .hero {
+        padding: 16px 8px;
+      }
+
+      .brand {
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 0.2em;
+        color: var(--accent);
+      }
+
+      .hero p {
+        color: var(--muted);
+        line-height: 1.6;
+        margin: 0 0 16px;
+      }
+
+      .bullets {
+        display: grid;
+        gap: 8px;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        color: var(--muted);
+      }
+
+      .bullets li {
+        padding-left: 24px;
+        position: relative;
+      }
+
+      .bullets li::before {
+        content: "";
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--accent-2);
+        position: absolute;
+        left: 0;
+        top: 7px;
+      }
+
+      .card {
+        background: var(--surface);
+        border-radius: var(--radius);
+        padding: 28px;
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(14, 122, 127, 0.12);
+      }
+
+      .reg-form {
+        display: grid;
+        gap: 16px;
+      }
+
+      .field label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: var(--ink);
+        text-transform: capitalize;
+      }
+
+      .input-wrap {
+        position: relative;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid rgba(30, 42, 47, 0.2);
+        font-size: 1rem;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(14, 122, 127, 0.2);
+      }
+
+      .toggle {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background: rgba(14, 122, 127, 0.1);
+        color: var(--accent);
+        font-weight: 600;
+        padding: 6px 10px;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      button[type="submit"] {
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 999px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      button[type="submit"]:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 20px rgba(14, 122, 127, 0.2);
+      }
+
+      .ghost {
+        background: transparent;
+        border: 1px solid rgba(30, 42, 47, 0.2);
+        color: var(--ink);
+        padding: 12px 20px;
+        border-radius: 999px;
+        cursor: pointer;
+      }
+
+      .form-hint {
+        margin: 0;
+        font-size: 0.95rem;
+        color: var(--muted);
+      }
+
+      .table-card {
+        max-width: 1100px;
+        margin: 0 auto;
+        background: var(--surface);
+        border-radius: var(--radius);
+        padding: 24px;
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(14, 122, 127, 0.08);
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 360px;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 12px 10px;
+        border-bottom: 1px solid rgba(30, 42, 47, 0.12);
+      }
+
+      th {
+        font-size: 0.9rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      @media (max-width: 720px) {
+        body {
+          padding: 20px 16px 32px;
+        }
+
+        .card,
+        .table-card {
+          padding: 20px;
+        }
+
+        .actions {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .toggle {
+          padding: 4px 8px;
+          font-size: 0.85rem;
+        }
+      }
+    </style>
   </head>
 
   <body>
-    <h1>Registration form</h1>
-    <form method="POST">
-      {% csrf_token %}
-      <label>name</label>
-      {{ form.name}}
-      <br />
-      <label>email</label>
-      {{ form.email}}
-      <br />
-      <label>password</label>
-      {{ form.password}}
-      <br />
-      <label>confirm password</label>
-      {{ form.cpassword}}
-      <br />
-      <button type="submit">Register</button>
-      <hr />
-      <h2>registered users</h2>
-      <table border="1">
-        {% for i in users %}
-        <tr>
-          <td>{{i.name}}</td>
-          <td>{{i.email}}</td>
-        </tr>
-        {% endfor %}
-      </table>
-    </form>
+    <main class="page">
+      <section class="hero">
+        <div class="brand">BlueBus</div>
+        <h1>Registration form</h1>
+        <p>
+          Create your account to manage bookings and save your favorite routes.
+          Your details stay secure and private.
+        </p>
+        <ul class="bullets">
+          <li>Track every booking in one place.</li>
+          <li>Get route updates and offers.</li>
+          <li>Fast checkout on your next ride.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <form method="POST" class="reg-form" id="regForm">
+          {% csrf_token %}
+          <div class="field">
+            <label>name</label>
+            <div class="input-wrap">{{ form.name }}</div>
+          </div>
+          <div class="field">
+            <label>email</label>
+            <div class="input-wrap">{{ form.email }}</div>
+          </div>
+          <div class="field">
+            <label>password</label>
+            <div class="input-wrap">
+              {{ form.password }}
+              <button class="toggle" type="button" data-toggle="password">
+                Show
+              </button>
+            </div>
+          </div>
+          <div class="field">
+            <label>confirm password</label>
+            <div class="input-wrap">
+              {{ form.cpassword }}
+              <button class="toggle" type="button" data-toggle="cpassword">
+                Show
+              </button>
+            </div>
+          </div>
+          <div class="actions">
+            <button type="submit">Register</button>
+            <button type="reset" class="ghost">Clear</button>
+          </div>
+          <p class="form-hint" id="formHint" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+
+    <section class="table-card">
+      <h2>Registered users</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in users %}
+            <tr>
+              <td>{{ i.name }}</td>
+              <td>{{ i.email }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="2">No users registered yet.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <script>
+      const form = document.getElementById("regForm");
+      const hint = document.getElementById("formHint");
+      const passwordInput = document.querySelector("input[name='password']");
+      const confirmInput = document.querySelector("input[name='cpassword']");
+
+      if (passwordInput) {
+        passwordInput.setAttribute("type", "password");
+        passwordInput.setAttribute("autocomplete", "new-password");
+        passwordInput.setAttribute("placeholder", "Create a password");
+      }
+
+      if (confirmInput) {
+        confirmInput.setAttribute("type", "password");
+        confirmInput.setAttribute("autocomplete", "new-password");
+        confirmInput.setAttribute("placeholder", "Confirm password");
+      }
+
+      const toggles = document.querySelectorAll(".toggle");
+      toggles.forEach((toggle) => {
+        toggle.addEventListener("click", () => {
+          const targetName = toggle.getAttribute("data-toggle");
+          const target = document.querySelector(`input[name='${targetName}']`);
+          if (!target) {
+            return;
+          }
+          const isHidden = target.getAttribute("type") === "password";
+          target.setAttribute("type", isHidden ? "text" : "password");
+          toggle.textContent = isHidden ? "Hide" : "Show";
+        });
+      });
+
+      const updateHint = () => {
+        if (!passwordInput || !confirmInput) {
+          return;
+        }
+        if (!passwordInput.value && !confirmInput.value) {
+          hint.textContent = "";
+          return;
+        }
+        if (passwordInput.value === confirmInput.value) {
+          hint.textContent = "Passwords match.";
+          hint.style.color = "#0e7a7f";
+        } else {
+          hint.textContent = "Passwords do not match yet.";
+          hint.style.color = "#d25b38";
+        }
+      };
+
+      if (passwordInput) {
+        passwordInput.addEventListener("input", updateHint);
+      }
+      if (confirmInput) {
+        confirmInput.addEventListener("input", updateHint);
+      }
+
+      if (form) {
+        form.addEventListener("reset", () => {
+          hint.textContent = "";
+        });
+      }
+    </script>
   </body>
 </html>
